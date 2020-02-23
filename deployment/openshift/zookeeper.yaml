@@ -131,8 +131,8 @@ spec:
                     mountPath: /pulsar/data
             serviceAccountName: zookeepersa
             securityContext:
-              runAsUser: 1001
-              fsGroup: 1001
+              runAsUser: 10001
+              fsGroup: 10001
     volumeClaimTemplates:
     - metadata:
         name: datadir
@@ -142,4 +142,5 @@ spec:
         accessModes: [ "ReadWriteOnce" ]
         resources:
           requests:
-            storage: 20Gi
+            #storage: 20Gi
+            storage: 10Gi
