@@ -131,8 +131,8 @@ spec:
                     mountPath: /pulsar/data
             serviceAccountName: zookeepersa
             securityContext:
-              runAsUser: 10001
-              fsGroup: 10001
+              runAsUser: 1000100000
+              fsGroup: 1000100000
     volumeClaimTemplates:
     - metadata:
         name: datadir
