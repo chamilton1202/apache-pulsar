@@ -37,7 +37,7 @@ seLinuxContext:
 supplementalGroups:
   type: RunAsAny
 users:
-- system:serviceaccount:apache-pulsar:zookeepersa
+- system:serviceaccount:connected-workspaces-poc:zookeepersa
 volumes:
 - configMap
 - downwardAPI

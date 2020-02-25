@@ -1,0 +1,14 @@
+apiVersion: v1
+data:
+  PULSAR_MEM: '" -Xms64m -Xmx128m -XX:MaxDirectMemorySize=128m"'
+  clusterName: local
+  configurationStoreServers: zookeeper
+  zookeeperServers: zookeeper
+kind: ConfigMap
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","data":{"PULSAR_MEM":"\" -Xms64m -Xmx128m -XX:MaxDirectMemorySize=128m\"","clusterName":"local","configurationStoreServers":"zookeeper","zookeeperServers":"zookeeper"},"kind":"ConfigMap","metadata":{"annotations":{},"name":"proxy-config","namespace":"apache-pulsar"}}
+  creationTimestamp: null
+  name: proxy-config
+  selfLink: /api/v1/namespaces/apache-pulsar/configmaps/proxy-config

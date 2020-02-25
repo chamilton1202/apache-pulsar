@@ -1,0 +1,130 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"StatefulSet","metadata":{"annotations":{},"labels":{"app":"pulsar","component":"zookeeper"},"name":"zk","namespace":"apache-pulsar"},"spec":{"replicas":3,"selector":{"matchLabels":{"app":"pulsar","cluster":"local","component":"zookeeper"}},"serviceName":"zookeeper","template":{"metadata":{"annotations":{"pod.alpha.kubernetes.io/initialized":"true","prometheus.io/port":"8000","prometheus.io/scrape":"true"},"labels":{"app":"pulsar","cluster":"local","component":"zookeeper"}},"spec":{"affinity":{"podAntiAffinity":{"preferredDuringSchedulingIgnoredDuringExecution":[{"podAffinityTerm":{"labelSelector":{"matchExpressions":[{"key":"app","operator":"In","values":["pulsar"]},{"key":"component","operator":"In","values":["zookeeper"]}]},"topologyKey":"kubernetes.io/hostname"},"weight":1}]}},"containers":[{"args":["bin/apply-config-from-env.py conf/zookeeper.conf \u0026\u0026 bin/apply-config-from-env.py conf/pulsar_env.sh \u0026\u0026 bin/generate-zookeeper-config.sh conf/zookeeper.conf \u0026\u0026 bin/pulsar zookeeper\n"],"command":["sh","-c"],"env":[{"name":"ZOOKEEPER_SERVERS","value":"zk-0,zk-1,zk-2"}],"envFrom":[{"configMapRef":{"name":"zookeeper-config"}}],"image":"apachepulsar/pulsar-all:latest","livenessProbe":{"exec":{"command":["bin/pulsar-zookeeper-ruok.sh"]},"initialDelaySeconds":15,"timeoutSeconds":5},"name":"zookeeper","ports":[{"containerPort":2181,"name":"client"},{"containerPort":2888,"name":"server"},{"containerPort":3888,"name":"leader-election"}],"readinessProbe":{"exec":{"command":["bin/pulsar-zookeeper-ruok.sh"]},"initialDelaySeconds":5,"timeoutSeconds":5},"volumeMounts":[{"mountPath":"/pulsar/data","name":"datadir"}]}],"securityContext":{"fsGroup":1001,"runAsUser":1001},"serviceAccountName":"zookeepersa"}},"volumeClaimTemplates":[{"metadata":{"labels":{"component":"zopkeeper"},"name":"datadir"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"20Gi"}}}}]}}
+  creationTimestamp: null
+  generation: 1
+  labels:
+    app: pulsar
+    component: zookeeper
+  name: zk
+  selfLink: /apis/apps/v1/namespaces/apache-pulsar/statefulsets/zk
+spec:
+  podManagementPolicy: OrderedReady
+  replicas: 3
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: pulsar
+      cluster: local
+      component: zookeeper
+  serviceName: zookeeper
+  template:
+    metadata:
+      annotations:
+        pod.alpha.kubernetes.io/initialized: "true"
+        prometheus.io/port: "8000"
+        prometheus.io/scrape: "true"
+      creationTimestamp: null
+      labels:
+        app: pulsar
+        cluster: local
+        component: zookeeper
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - pulsar
+                - key: component
+                  operator: In
+                  values:
+                  - zookeeper
+              topologyKey: kubernetes.io/hostname
+            weight: 1
+      containers:
+      - args:
+        - |
+          bin/apply-config-from-env.py conf/zookeeper.conf && bin/apply-config-from-env.py conf/pulsar_env.sh && bin/generate-zookeeper-config.sh conf/zookeeper.conf && bin/pulsar zookeeper
+        command:
+        - sh
+        - -c
+        env:
+        - name: ZOOKEEPER_SERVERS
+          value: zk-0,zk-1,zk-2
+        envFrom:
+        - configMapRef:
+            name: zookeeper-config
+        image: apachepulsar/pulsar-all:latest
+        imagePullPolicy: Always
+        livenessProbe:
+          exec:
+            command:
+            - bin/pulsar-zookeeper-ruok.sh
+          failureThreshold: 3
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+        name: zookeeper
+        ports:
+        - containerPort: 2181
+          name: client
+          protocol: TCP
+        - containerPort: 2888
+          name: server
+          protocol: TCP
+        - containerPort: 3888
+          name: leader-election
+          protocol: TCP
+        readinessProbe:
+          exec:
+            command:
+            - bin/pulsar-zookeeper-ruok.sh
+          failureThreshold: 3
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /pulsar/data
+          name: datadir
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext:
+        fsGroup: 1001
+        runAsUser: 1001
+      serviceAccount: zookeepersa
+      serviceAccountName: zookeepersa
+      terminationGracePeriodSeconds: 30
+  updateStrategy:
+    rollingUpdate:
+      partition: 0
+    type: RollingUpdate
+  volumeClaimTemplates:
+  - metadata:
+      creationTimestamp: null
+      labels:
+        component: zopkeeper
+      name: datadir
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 20Gi
+    status:
+      phase: Pending
+status:
+  replicas: 0
