@@ -11,8 +11,8 @@ defaultAddCapabilities: null
 fsGroup:
   type: MustRunAs
   ranges:
-  - max: 1000
-    min: 1001
+  - max: 1000100000
+    min: 1000100000
 groups:
 - system:cluster-admins
 kind: SecurityContextConstraints
@@ -30,8 +30,8 @@ requiredDropCapabilities:
 runAsUser:
   type: MustRunAs
   ranges:
-  - max: 1000
-    min: 1001
+  - max: 1000100000
+    min: 1000100000
 seLinuxContext:
   type: RunAsAny
 supplementalGroups:
