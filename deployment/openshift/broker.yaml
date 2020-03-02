@@ -67,7 +67,7 @@ spec:
         spec:
             containers:
               - name: broker
-                image: apachepulsar/pulsar-all:latest
+                image: quay.io/chamilton614/pulsar-all:latest
                 command: ["sh", "-c"]
                 args:
                   - >
@@ -93,8 +93,4 @@ spec:
                            fieldPath: status.podIP
             volumes:
               - name: logs-disk
-            serviceAccount: zookeepersa
-            securityContext:
-              runAsUser: 1001
-              fsGroup: 1001
           

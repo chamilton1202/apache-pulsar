@@ -90,7 +90,7 @@ spec:
                             topologyKey: "kubernetes.io/hostname"
             containers:
               - name: zookeeper
-                image: apachepulsar/pulsar-all:latest
+                image: quay.io/chamilton614/pulsar-all:latest
                 command: ["sh", "-c"]
                 args:
                   - >
@@ -129,18 +129,6 @@ spec:
                 volumeMounts:
                   - name: datadir
                     mountPath: /pulsar/data
-            serviceAccountName: zookeepersa
-            securityContext:
-              runAsUser: 1000100000
-              fsGroup: 1000100000
-    volumeClaimTemplates:
-    - metadata:
-        name: datadir
-        labels:
-          component: zopkeeper
-      spec:
-        accessModes: [ "ReadWriteOnce" ]
-        resources:
-          requests:
-            #storage: 20Gi
-            storage: 10Gi
+            volumes:
+              - name: datadir
+                emptyDir: {}

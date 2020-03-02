@@ -49,7 +49,7 @@ spec:
       labels:
         app: pulsar
         component: bookkeeper
-        cluster: us-east
+        cluster: local
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/port: "8000"
@@ -73,7 +73,7 @@ spec:
                         - bookkeeper
       initContainers:
         - name: bookie-metaformat
-          image: apachepulsar/pulsar:latest
+          image: quay.io/chamilton614/pulsar:latest
           command: ["sh", "-c"]
           args:
             - >
@@ -84,7 +84,7 @@ spec:
                 name: bookie-config
       containers:
         - name: bookie
-          image: apachepulsar/pulsar-all:latest
+          image: quay.io/chamilton614/pulsar-all:latest
           command: ["sh", "-c"]
           args:
             - >
@@ -112,7 +112,7 @@ spec:
         # The first time, initialize BK metadata in zookeeper
         # Otherwise ignore error if it's already there
         - name: bookie-metaformat
-          image: apachepulsar/pulsar-all:latest
+          image: quay.io/chamilton614/pulsar-all:latest
           command: ["sh", "-c"]
           args:
             - >
@@ -121,10 +121,6 @@ spec:
           envFrom:
             - configMapRef:
                 name: bookie-config
-      serviceAccount: zookeepersa
-      securityContext:
-        runAsUser: 1001
-        fsGroup: 1001
   volumeClaimTemplates:
     - metadata:
         name: journal-disk

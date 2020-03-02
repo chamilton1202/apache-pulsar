@@ -1,0 +1,19 @@
+#Default Apache Pulsar Image
+podman run -it --name pulsar-manager -p 9527:9527 -e REDIRECT_HOST=http://172.18.88.231 \
+-e REDIRECT_PORT=9527 -e DRIVER_CLASS_NAME=org.postgresql.Driver -e URL='jdbc:postgresql://127.0.0.1:5432/pulsar_manager' \
+-e USERNAME=pulsar -e PASSWORD=pulsar -e LOG_LEVEL=DEBUG -v $PWD:/data apachepulsar/pulsar-manager:v0.1.0 /bin/sh
+
+#Custom Apache Pulsar Image with volume
+podman run -it --name pulsar-manager -p 9527:9527 -e REDIRECT_HOST=http://172.18.88.231 \
+-e REDIRECT_PORT=9527 -e DRIVER_CLASS_NAME=org.postgresql.Driver -e URL='jdbc:postgresql://127.0.0.1:5432/pulsar_manager' \
+-e USERNAME=pulsar -e PASSWORD=pulsar -e LOG_LEVEL=DEBUG -v $PWD:/data chamilton614/pulsar-manager /bin/sh
+
+#Custom Apache Pulsar Image No volume
+podman run -it --name pulsar-manager -p 9527:9527 -e REDIRECT_HOST=http://172.18.88.231 \
+-e REDIRECT_PORT=9527 -e DRIVER_CLASS_NAME=org.postgresql.Driver -e URL='jdbc:postgresql://127.0.0.1:5432/pulsar_manager' \
+-e USERNAME=pulsar -e PASSWORD=pulsar -e LOG_LEVEL=DEBUG chamilton614/pulsar-manager /bin/sh
+
+
+
+brokerServiceURL=pulsar://broker:6650/
+brokerWebServiceURL=http://broker:8080/

@@ -1,0 +1,17 @@
+#Build Custom Pulsar Images (pulsar, pulsar-all, pulsar-standalone, pulsar-manager)
+podman build -t chamilton614/<image name> .
+
+#Run Custom Pulsar Image
+podman run -i --name <image name> chamilton614/<image name>
+
+#Run Custom Pulsar Image interactively
+podman run -it --name <image name> chamilton614/<image name> sh
+
+#Stop Custom Pulsar Image
+podman stop <image name>
+
+#Delete All Container Images
+podman rm --all
+
+#Delete Custom Pulsar Image
+podman rmi <Image Id>

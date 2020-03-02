@@ -58,7 +58,7 @@ spec:
         spec:
             containers:
               - name: proxy
-                image: apachepulsar/pulsar-all:latest
+                image: quay.io/chamilton614/pulsar-all:latest
                 command: ["sh", "-c"]
                 args:
                   - >
@@ -71,7 +71,3 @@ spec:
                 envFrom:
                   - configMapRef:
                         name: proxy-config
-            serviceAccount: zookeepersa
-            securityContext:
-              runAsUser: 1001
-              fsGroup: 1001

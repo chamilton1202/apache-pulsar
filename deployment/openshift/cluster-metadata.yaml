@@ -10,7 +10,7 @@ spec:
     spec:
       containers:
         - name: pulsar-cluster-metadata-init-container
-          image: apachepulsar/pulsar:latest
+          image: quay.io/chamilton614/pulsar:latest
           command: ["sh", "-c"]
           args:
             - >
@@ -21,4 +21,3 @@ spec:
                 --web-service-url http://broker.default.svc.cluster.local:8080/ \
                 --broker-service-url pulsar://broker.default.svc.cluster.local:6650/ || true;
       restartPolicy: Never
-      serviceAccountName: zookeepersa
