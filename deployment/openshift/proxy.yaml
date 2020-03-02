@@ -7,6 +7,8 @@ data:
     zookeeperServers: zookeeper
     configurationStoreServers: zookeeper
     clusterName: local
+    brokerServiceURL: pulsar://broker:6650/
+    brokerWebServiceURL: http://broker:8080/
 ---
 ##
 ## Expose all nodes on port so that you can reach cluster from outside k8
