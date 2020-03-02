@@ -9,7 +9,8 @@ These deployment steps are documented for an OpenShift deployment but they could
     --docker-server=quay.io \
     --docker-username=<Quay Username> \
     --docker-password=<Quay Password> \
-    --docker-email=None```
+    --docker-email=None
+```
 
 ### Link the Secret to the Default Service Account
 `oc secrets link default secret/quay-secret --for=pull`
