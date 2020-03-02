@@ -5,7 +5,8 @@ These deployment steps are documented for an OpenShift deployment but they could
 `oc new-project apache-pulsar`
 
 ### Create the Quay Container Image Pull Secret
-```oc create secret docker-registry quay-secret \
+```
+oc create secret docker-registry quay-secret \
     --docker-server=quay.io \
     --docker-username=<Quay Username> \
     --docker-password=<Quay Password> \
